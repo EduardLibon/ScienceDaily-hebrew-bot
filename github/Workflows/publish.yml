@@ -1,0 +1,30 @@
+name: Publish ScienceDaily Summaries (Hebrew)
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # פעם בשעה, בדקה 00
+  workflow_dispatch: {}    # אפשר גם להריץ ידנית
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run bot
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.8133970222:AAHbWPXIEmampw1gelfqg5P6MSYaCMiDGdQ }}
+          TELEGRAM_CHANNEL: ${{ secrets.@Arutz_Hamada }}
+        run: |
+          python bot.py
